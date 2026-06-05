@@ -1,7 +1,29 @@
+# Dependencies
+node_modules/
 
 # Playwright
-node_modules/
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Allure
+allure-results/
+allure-report/
+
+# Environment files
+.env.qa
+.env.preprod
+
+# Screenshots
+evidencia/
+
+# TypeScript build
+dist/
+
+# Reports
+reports/
+
+# OS
+.DS_Store
+Thumbs.db
