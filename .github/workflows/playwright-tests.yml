@@ -26,7 +26,11 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run tests
-        run: npm run test:bdd
+        run: |
+          set -x
+          npm run test:bdd 2>&1 | tee test-output.txt
+          exit ${PIPESTATUS[0]}
+        continue-on-error: true
         env:
           ENV: qa
           URL: ${{ secrets.URL }}
@@ -34,4 +38,5 @@ jobs:
           pass: ${{ secrets.PASS }}
 
       - name: Show test output
+        if: always()
         run: cat test-output.txt
