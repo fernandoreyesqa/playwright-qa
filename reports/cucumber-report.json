@@ -1,0 +1,145 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "casos-de-pruebas-checkout;checkout---validar-todos-los-campos-obligatorios-(solo-se-ingresa-el-first-name-y-last-name)",
+        "keyword": "Escenario",
+        "line": 25,
+        "name": "Checkout - Validar todos los campos obligatorios (Solo se ingresa el first name y last name)",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 707611600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 26,
+            "name": "Que el usuario visualiza el login",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1138329399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Cuando ",
+            "line": 27,
+            "name": "El usuario ingresa sus credenciales",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 512457000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Y ",
+            "line": 28,
+            "name": "El usuario agrega un producto al carro",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 65310700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Y ",
+            "line": 29,
+            "name": "El usuario hace clic en el boton del carrito",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 108335700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Y ",
+            "line": 30,
+            "name": "El usuario hace clic en Checkout",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 79635599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Pero ",
+            "line": 31,
+            "name": "Se ingresa solo el first name y last name y se hace clic en continuar",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 175207199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Entonces ",
+            "line": 32,
+            "name": "El sistema mostrara un mensaje de error",
+            "match": {
+              "location": "..\\..\\Nueva carpeta 2\\playwright\\node_modules\\@cucumber\\cucumber\\src\\support_code_library_builder\\get_definition_line_and_uri.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 34075500
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 265214699
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@checkout",
+            "line": 3
+          },
+          {
+            "name": "@ordenar",
+            "line": 24
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "casos-de-pruebas-checkout",
+    "line": 4,
+    "keyword": "Característica",
+    "name": "Casos de pruebas checkout",
+    "tags": [
+      {
+        "name": "@checkout",
+        "line": 3
+      }
+    ],
+    "uri": "features\\checkout\\checkout.feature"
+  }
+]

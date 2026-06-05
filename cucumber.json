@@ -1,0 +1,10 @@
+{
+  "default": {
+    "paths": ["features/**/*.feature"],
+    "require": ["support/env.ts", "support/**/*.ts", "step-definitions/**/*.ts"],
+    "requireModule": ["ts-node/register", "tsconfig-paths/register"],
+    "timeout": 30000,
+    "format": ["allure-cucumberjs/reporter"],
+    "formatOptions": { "snippetInterface": "async-await" }
+  }
+}

@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","3889","Checkout - Se rellena","","2026-05-18","passed","2026-05-18","","","",""
+"","14145","Checkout - Validar todos los campos obligatorios (Solo se ingresa el first name y last name)","","2026-05-18","passed","2026-05-18","","","",""
+"","11860","Checkout - Validar todos los campos obligatorios","","2026-05-18","broken","2026-05-18","","","",""
+"","14891","Checkout - Validar todos los campos obligatorios (Solo se ingresa el first name)","","2026-05-18","passed","2026-05-18","","","",""
