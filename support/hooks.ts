@@ -10,7 +10,7 @@ import { checkoutPage } from 'pageobjesct/checkoutPage';
 let browser: Browser;
 
 BeforeAll({ timeout: 30000 }, async () => {
-    browser = await chromium.launch({ headless: false });
+    browser = await chromium.launch({ headless: true });
 });
 
 AfterAll(async () => {
