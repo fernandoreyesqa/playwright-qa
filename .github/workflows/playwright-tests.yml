@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -25,18 +27,35 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Detect changed features
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD)
+          echo "Changed files: $CHANGED"
+
+          if echo "$CHANGED" | grep -q "features/login"; then
+            echo "tags=@login" >> $GITHUB_OUTPUT
+          elif echo "$CHANGED" | grep -q "features/inventory"; then
+            echo "tags=@invetario" >> $GITHUB_OUTPUT
+          elif echo "$CHANGED" | grep -q "features/carro"; then
+            echo "tags=@carro" >> $GITHUB_OUTPUT
+          elif echo "$CHANGED" | grep -q "features/checkout"; then
+            echo "tags=@checkout" >> $GITHUB_OUTPUT
+          else
+            echo "tags=all" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run tests
         run: |
-          set -x
-          npm run test:bdd 2>&1 | tee test-output.txt
-          exit ${PIPESTATUS[0]}
-        continue-on-error: true
+          if [ "${{ steps.changes.outputs.tags }}" = "all" ]; then
+            echo "Running all tests"
+            npm run test:bdd
+          else
+            echo "Running tests for tag: ${{ steps.changes.outputs.tags }}"
+            npx cucumber-js --tags "${{ steps.changes.outputs.tags }}"
+          fi
         env:
           ENV: qa
           URL: ${{ secrets.URL }}
           usuario: ${{ secrets.USUARIO }}
           pass: ${{ secrets.PASS }}
-
-      - name: Show test output
-        if: always()
-        run: cat test-output.txt

@@ -23,7 +23,7 @@ Característica: Login usuario casos de pruebas
         Cuando El usuario no ingresa el usuario y contraseña
         Entonces El sistema mostrara un mensaje indicando error
 
-    Escenario: Login erroneo - Usuario incorrecto
+    Escenario: Login erroneo - Usuario incorrecto 
         Dado Que el usuario navege por el Login
         Cuando El usuario ingresa un usuario que no corresponde
         Entonces El sistema indica error de usuario
