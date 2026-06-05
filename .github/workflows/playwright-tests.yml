@@ -32,3 +32,6 @@ jobs:
           URL: ${{ secrets.URL }}
           usuario: ${{ secrets.USUARIO }}
           pass: ${{ secrets.PASS }}
+
+      - name: Show test output
+        run: cat test-output.txt
