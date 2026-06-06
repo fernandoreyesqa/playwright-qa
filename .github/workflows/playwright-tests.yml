@@ -59,7 +59,3 @@ jobs:
           URL: ${{ secrets.URL }}
           usuario: ${{ secrets.USUARIO }}
           pass: ${{ secrets.PASS }}
-
-      - name: Show test output
-        if: always()
-        run: cat test-output.txt
