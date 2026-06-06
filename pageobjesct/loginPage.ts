@@ -62,4 +62,31 @@ export class LoginPage { // Recomendado: Empezar con Mayúscula
     async validarPaginaLogin(){
         await expect(this.usernameInput).toBeVisible()
     }
+
+    async ingresoUsuario(){
+        await this.usernameInput.fill(ENV_CONFIG.user);
+    }
+
+    async ingresoContraseña(){
+        await this.passwordInput.fill(ENV_CONFIG.pass);
+    }
+
+    async loginCargado(){
+        await expect(this.usernameInput).toBeVisible()
+        await expect(this.passwordInput).toBeVisible()
+        await expect(this.loginButton).toBeVisible()
+    }
+
+    async clickButon(){
+        await this.loginButton.click()
+    }
+
+    async verificarUrlInventario(){
+        await expect(this.page).toHaveURL(/.*inventory.html/);
+    }
+
+    async ingresarUsuario(usuario: string){
+        await this.usernameInput.fill(usuario);
+    }
+    
 }
