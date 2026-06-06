@@ -49,17 +49,13 @@ jobs:
         run: |
           if [ "${{ steps.changes.outputs.tags }}" = "all" ]; then
             echo "Running all tests"
-            npm run test:bdd 2>&1 | tee test-output.txt || true
+            npm run test:bdd
           else
             echo "Running tests for tag: ${{ steps.changes.outputs.tags }}"
-            npx cucumber-js --tags "${{ steps.changes.outputs.tags }}" 2>&1 | tee test-output.txt || true
+            npx cucumber-js --tags "${{ steps.changes.outputs.tags }}"
           fi
         env:
           ENV: qa
           URL: ${{ secrets.URL }}
           usuario: ${{ secrets.USUARIO }}
           pass: ${{ secrets.PASS }}
-
-      - name: Show test output
-        if: always()
-        run: cat test-output.txt
