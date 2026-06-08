@@ -5,6 +5,7 @@ export const ENV_CONFIG = {
     pass: process.env.pass!,
     firstName: process.env.firstName!,
     lastName: process.env.lastName!,
-    postalCode: process.env.postalCode
+    postalCode: process.env.postalCode,
+    userProblem: process.env.userProblem
     
 };

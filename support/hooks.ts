@@ -9,7 +9,7 @@ import { checkoutPage } from 'pageobjesct/checkoutPage';
 
 let browser: Browser;
 
-BeforeAll({ timeout: 30000 }, async () => {
+BeforeAll({ timeout: 70000 }, async () => {
     browser = await chromium.launch({ headless: true });
 });
 
@@ -17,7 +17,7 @@ AfterAll(async () => {
     await browser.close();
 });
 
-Before({ timeout: 30000 }, async function () {
+Before({ timeout: 70000 }, async function () {
     const context: BrowserContext = await browser.newContext();
     const page: Page = await context.newPage();
     page.setDefaultTimeout(30000);

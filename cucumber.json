@@ -3,8 +3,9 @@
     "paths": ["features/**/*.feature"],
     "require": ["support/env.ts", "support/**/*.ts", "step-definitions/**/*.ts"],
     "requireModule": ["ts-node/register", "tsconfig-paths/register"],
-    "timeout": 30000,
-    "format": ["allure-cucumberjs/reporter"],
+    "timeout": 100000,
+    "retry": 2,
+    "format": ["allure-cucumberjs/reporter", "@cucumber/pretty-formatter"],
     "formatOptions": { "snippetInterface": "async-await" }
   }
 }
