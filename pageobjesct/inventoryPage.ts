@@ -26,6 +26,8 @@ export class inventoryPage {
     private readonly menuAbout: Locator;
     private readonly menuLogout: Locator;
     private readonly menuResetApp: Locator;
+    private readonly descripcionTexr: Locator;
+    private readonly precioText: Locator;
 
 
     constructor(page: Page){
@@ -43,7 +45,7 @@ export class inventoryPage {
         this.btnAgregarBikeLight = page.locator('#add-to-cart-sauce-labs-bike-light');
         this.btnRemove = page.locator('#remove-sauce-labs-backpack');
         this.imagenDetalle = page.locator('#inventory_item_container > div > div > div.inventory_details_img_container > img');
-        this.imagenInventario = page.locator('.inventory_item img').first();
+        this.imagenInventario = page.locator('.inventory_item img');
         this.imagenDetalle = page.locator('#inventory_item_container > div > div > div.inventory_details_img_container > img');
         this.btnBackProducts = page.locator('#back-to-products');
         this.titleInventary = page.locator('#header_container > div.header_secondary_container > span');
@@ -54,25 +56,81 @@ export class inventoryPage {
         this.menuAbout = page.locator('#about_sidebar_link');
         this.menuLogout = page.locator('#logout_sidebar_link');
         this.menuResetApp = page.locator('#reset_sidebar_link');
-        
+        this.descripcionTexr = page.locator('.inventory_item_desc');
+        this.precioText = page.locator('.inventory_item_price');
     }
 
     async agregarSauceLabsBackpack(){
-        await this.productTitulo.click()
-        await this.agregarButton.click()
+        await this.productTitulo.click();
+        await this.agregarButton.click();
     }
 
     async visualizarCarroCompra(){
-        await expect(this.carroButton).toBeVisible()
-        await this.carroButton.click()
+        await expect(this.carroButton).toBeVisible();
+        await this.carroButton.click();
     }
 
     async ingresoInventaru(){
-        await expect(this.iventroryPage).toBeVisible()
+        await expect(this.iventroryPage).toBeVisible();
     }
 
     async validarCantidadProductos(){
-        await expect(this.productos).toHaveCount(6)
+        await expect(this.productos).toHaveCount(6);
+    }
+
+    async validarCantidadProductosTitulos(){
+        await expect(this.tituloProducto).toHaveCount(6);
+    }
+
+    async validarCantidadProductosDescripcion(){
+        await expect(this.descripcionTexr).toHaveCount(6);
+    }
+
+    async validarCantidadProductosPrecio(){
+        await expect(this.precioText).toHaveCount(6);
+    }
+
+    async validarCantidadProductoImagen(){
+        const imagenes = this.imagenInventario;
+        const cantidad = await imagenes.count();
+
+        for(let i = 0; i < cantidad; i++){
+            const src = await imagenes.nth(i).getAttribute('src');
+            expect(src).not.toBeNull();
+            expect(src).not.toBe('');
+        }
+    }
+
+    async validarProductoConPrecio(nombre: string, precio: string){
+        const producto = this.page.locator('.inventory_item').filter({
+            has: this.page.locator('.inventory_item_name', {hasText: nombre})
+        });
+
+        await expect(producto.locator('.inventory_item_name')).toHaveText(nombre);
+        await expect(producto.locator('.inventory_item_price')).toHaveText(precio);
+    }
+
+    async clickAddToCart(nombreProducto: string){
+        const producto = this.page.locator('.inventory_item').filter({
+        has: this.page.locator('.inventory_item_name', { hasText: nombreProducto })
+    });
+        await producto.locator('.btn_inventory').click();
+    }
+
+    async validarBtnCambiaARemove(nombreProducto: string){
+        const producto = this.page.locator('.inventory_item').filter({
+        has: this.page.locator('.inventory_item_name', { hasText: nombreProducto })
+    });
+        await expect(producto.locator('.btn_inventory')).toHaveText('Remove');
+    }
+
+    async validarBadgeCarro(cantidad: string){
+        await expect(this.page.locator('.shopping_cart_badge')).toHaveText(cantidad);
+    }
+
+    async validarBotonesAddToCart(){
+        const botones = this.page.locator('.btn_inventory');
+        await expect(botones).toHaveCount(6);
     }
 
     async ingresoDetalle() {
@@ -89,6 +147,10 @@ export class inventoryPage {
 
     async validarProductoCarro(){
         await expect(this.carroCompra).toHaveText('1');
+    }
+
+    async validarCarroEnCero(){
+        await expect(this.carroCompra).not.toBeVisible();
     }
 
     async validarContenidoProductos(){
@@ -112,6 +174,18 @@ export class inventoryPage {
         expect(primerTitulo).toBe(nombreEsperado)
     }
 
+    async validarUltimoProducto(nombreEsperado: string){
+        const ultimoTitulo = await this.tituloProducto.last().innerText();
+        expect(ultimoTitulo).toBe(nombreEsperado);
+    }
+
+    async validarUltimoProductoPrecio(nombreEsperado: string, precio: string){
+        const ultimoTitulo = await this.tituloProducto.last().innerText();
+         const primerPrecio = await this.precioText.last().innerText();
+        expect(ultimoTitulo).toBe(nombreEsperado);
+        expect(primerPrecio).toBe(precio);
+    }
+
     async ordenarZA(){
         await this.selectFiltros.selectOption('za')
     }
@@ -119,6 +193,13 @@ export class inventoryPage {
     async validarPrimerProductoZA(nombreEsperado: string){
         const primerTitulo = await this.tituloProducto.first().innerText();
         expect(primerTitulo).toBe(nombreEsperado)
+    }
+
+    async validarPrimerProductoPrecio(nombreEsperado: string, precio: string){
+        const primerTitulo = await this.tituloProducto.first().innerText();
+        const primerPrecio = await this.precioText.first().innerText();
+        expect(primerTitulo).toBe(nombreEsperado)
+        expect(primerPrecio).toBe(precio)
     }
 
     async ordenarMenoMayor(){
@@ -197,4 +278,11 @@ export class inventoryPage {
     async validarIngresoInventory(){
         await expect(this.titleInventary).toBeVisible()
     }
+
+    async clickRemoveProducto(nombreProducto: string){
+    const producto = this.page.locator('.inventory_item').filter({
+        has: this.page.locator('.inventory_item_name', { hasText: nombreProducto })
+    });
+    await producto.locator('.btn_secondary').click();
+}
 }

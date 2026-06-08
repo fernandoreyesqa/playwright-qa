@@ -62,6 +62,10 @@ export class LoginPage { // Recomendado: Empezar con Mayúscula
         await this.loginButton.click()
     }
 
+    async loginVisible(){
+        await expect(this.loginButton).toBeVisible()
+    }
+
     async mesajeError(){
         await expect(this.errorMensaje).toBeVisible();
     }

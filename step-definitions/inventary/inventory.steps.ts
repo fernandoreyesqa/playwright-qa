@@ -3,156 +3,159 @@ import { LoginPage } from 'pageobjesct/loginPage';
 import { inventoryPage } from 'pageobjesct/inventoryPage';
 import { detallPage } from 'pageobjesct/detalle';
 
-Given('Que el usuario visualiza el login', async function (this: IWorld){
-    
-    await this.login.navegar()
+Given('que el usuario accede a saudemo', async function(this: IWorld){
+    await this.login.navegar();
 })
 
-When('El usuario ingresa sus credenciales', async function (this: IWorld){
-
-    await this.login.loginPositivo()
+When('ingresa credenciales válidas de usuario estándar', async function(this: IWorld){
+    await this.login.ingresoUsuario();
+    await this.login.ingresoContraseña();
 })
 
-Then('El sistema mostrara la pagina de inventario',async function (this: IWorld){
-
-    await this.inventori.ingresoInventaru()
+When('hace clic en el botón Login', async function(this: IWorld){
+    await this.login.clickButon();
 })
 
-Then('El sistema visualiza la cantidad de productos', async function (this: IWorld){
-
-    await this.inventori.validarCantidadProductos()
+Then('el usuario es redirigido a {string}', async function(this: IWorld, url: string){
+    await this.login.navegarUrl(url);
 })
 
-When('El usuario ingreso al detalle del producto', async function (this: IWorld){
-    
-
-    this.textoTitulo = await this.inventario.ingresoDetalle()
+Given('que el usuario está en la página de inventario', async function(this: IWorld){
+    await this.inventario.ingresoInventaru();
 })
 
-Then('El sistema mostrara el detalle del producto',async function (this: IWorld) {
-
-    await this.detalle.validarTituloDetalle(this.textoTitulo)
+Then('se muestran exactamente 6 productos en la grilla', async function(this: IWorld){
+    await this.inventario.validarCantidadProductos();
 })
 
-When('El usuario ingresa un porducto al carro', async function (this: IWorld){
-
-    await this.inventario.agregarAlCarro()
+When('cada producto contiene un elemento con el título visible', async function(this: IWorld){
+    await this.inventario.validarCantidadProductosTitulos();
 })
 
-Then('El sistema mostrara un producto en el carro',async function (this: IWorld) {
-    
-
-    await this.inventario.validarProductoCarro()
-} )
-
-When('Cada producto debe tener titulo precio e imagen', async function (this: IWorld) {
-
-    await this.inventario.validarContenidoProductos()
+When('cada producto contiene un elemento con la descripción visible', async function(this: IWorld){
+    await this.inventario.validarCantidadProductosDescripcion();
 })
 
-When('El usuario ordena los productos de A-Z', async function (this: IWorld) {
-    
+When('cada producto contiene un elemento con el precio visible', async function(this: IWorld){
+    await this.inventario.validarCantidadProductosPrecio();
+})
+
+When('cada producto contiene una imagen con atributo src no vacío', async function(this: IWorld){
+    await this.inventario.validarCantidadProductoImagen();
+})
+
+When('cada producto contiene un botón Add to cart', async function(this: IWorld){
+    await this.inventario.validarBotonesAddToCart()
+})
+
+Then('el inventario contiene el producto {string} con precio {string}', async function(this: IWorld, nombre: string, precio: string){
+    await this.inventario.validarProductoConPrecio(nombre,precio)
+})
+
+When('el badge del carrito no está visible', async function(this: IWorld){
+    await this.inventario.validarCarroEnCero()
+})
+
+When('hace clic en el botón "Add to cart" del producto {string}', async function(this: IWorld, producto: string){
+    await this.inventario.clickAddToCart(producto);
+})
+
+Then('el botón del producto cambia su texto a "Remove"', async function(this: IWorld){
+    await this.inventario.validarBtnCambiaARemove('Sauce Labs Backpack');
+})
+
+Then('el badge del carrito muestra el valor {string}', async function(this: IWorld, cantidad: string){
+    await this.inventario.validarBadgeCarro(cantidad);
+})
+
+Then('los tres botones correspondientes muestran el texto "Remove"', async function(this: IWorld){
+    await this.inventario.validarBtnCambiaARemove('Sauce Labs Backpack');
+})
+
+When('hace clic en "Add to cart" del producto {string}', async function(this: IWorld, producto: string){
+    await this.inventario.clickAddToCart(producto);
+})
+
+When('ha agregado el producto {string} al carrito', async function(this: IWorld, producto: string){
+    await this.inventario.clickAddToCart(producto);
+})
+
+When('hace clic en el botón "Remove" del producto {string}', async function(this: IWorld, nombre: string){
+    await this.inventario.clickRemoveProducto(nombre);
+})
+
+Then('el botón del producto cambia su texto a "Add to cart"', async function(this: IWorld){
+    await this.inventario.validarBotonesAddToCart()
+})
+
+When('hace clic en el ícono del carrito ubicado en el header', async function(this: IWorld){
+    await this.inventario.ingresoCarroCompra();
+})
+
+When('selecciona la opción Name A to Z del selector de ordenamiento', async function(this: IWorld){
     await this.inventario.ordenarAZ();
 })
 
-Then('El primer producto debe ser Sauce Labs Backpack', async function (this: IWorld) {
-    
-    await this.inventario.validarPrimeProducto('Sauce Labs Backpack')
+Then('el primer producto de la grilla es {string}', async function (this:IWorld, nombre: string)   {
+    await this.inventario.validarPrimeProducto(nombre);
 })
 
-When('El usuario ordena los productos de Z-A',async function (this: IWorld){
-    
+Then('el último producto de la grilla es {string}', async function(this:IWorld, nombre: string){
+    await this.inventario.validarUltimoProducto(nombre);
+})
+
+When('selecciona la opción Name Z to A del selector de ordenamiento', async function(this: IWorld){
     await this.inventario.ordenarZA();
-} )
-
-Then('el primer producto debe ser Test.allTheThings T-Shirt Red',async function (this: IWorld){
-    
-    await this.inventario.validarPrimerProductoZA('Test.allTheThings() T-Shirt (Red)')
-
-} )
-
-When('El usuario ordena de menor a mayor', async function (this: IWorld){
-    
-    await this.inventario.ordenarMenoMayor()
 })
 
-Then('El primer porducto debe ser Suece Labs Onesie', async function (this: IWorld){
-    
-    await this.inventario.validarPrecioMenorMayor('Sauce Labs Onesie')
+When('selecciona la opción Price low to high del selector de ordenamiento', async function(this: IWorld){
+    await this.inventario.ordenarMenoMayor();
 })
 
-When('El usuario ordena de mayor a menor',async function (this: IWorld){
-    
-    await this.inventario.ordenarMayorMenor()
-} )
-
-Then('El primer producto debe ser Sauce Labs Fleece Jacket',async function (this: IWorld){
-    
-    await this.inventario.validarPrecioMayorMenor('Sauce Labs Fleece Jacket')
-} )
-
-When('El usuario agrega dos productos al carro', async function (this: IWorld){
-    
-    await this.inventario.agregarDosProductos();
+Then('el primer producto de la grilla es {string} con precio {string}', async function(this:IWorld, nombre: string, precio: string){
+    await this.inventario.validarPrimerProductoPrecio(nombre,precio)
 })
 
-Then('El sistema muestra 2 productos en el carro',async function (this: IWorld){
-    
-    await this.inventario.validarDosProductosCarro()
+Then('el último producto de la grilla es {string} con precio {string}', async function(this: IWorld, nombre: string, precio: string){
+    await this.inventario.validarUltimoProductoPrecio(nombre,precio)
 })
 
-When('El usuario agrega un producto y luego lo elimina', async function (this: IWorld){
-    
-    await this.inventario.agregarAlCarro()
+When('selecciona la opción Price high to low del selector de ordenamiento', async function(this: IWorld){
+    await this.inventario.ordenarMayorMenor();
 })
 
-Then('El sistema no mostrara el producto agregado',async function (this: IWorld){
-    
-    await this.inventario.eliminarProductoCarro()
+When('hace clic en el título del producto', async function(this:  IWorld){
+    await this.inventario.ingresoDetalle()
 })
 
-When('El usuario hace clic en la imagen',async function (this: IWorld){
-    
-    await this.inventario.clickImagen()
-})
-Then('El sistema mostrara el detalle del producto con la imagen', async function (this: IWorld){
-    
-    await this.inventario.ingresoDetalleImagen()
+When('el usuario es redirigido a la URL que contiene {string}', async function(this: IWorld, url: string){
+    await this.login.navegarUrl(url);
 })
 
-When('Ingresa al detalle del producto', async function (this: IWorld){
-    await this.inventario.clickImagen()
+Given('que el usuario está en la página de detalle de un producto', async function(this: IWorld){
+    await this.inventario.ingresoDetalle()
 })
 
-When('seleeciona back to products', async function (this: IWorld){
+When('hace clic en el botón Back to products', async function(this: IWorld){
     await this.inventario.volverPaginaInventario()
 })
 
-Then('El sistema volvera a la pagina de inventory', async function (this: IWorld){
-    await this.inventario.validarIngresoInventary()
+Then('se muestran los 6 productos en la grilla', async function(this: IWorld){
+    await this.inventario.validarCantidadProductos();
 })
 
-When('El usuario ingresa al carro de compra', async function (this: IWorld){
-    await this.inventario.ingresoCarroCompra()
-})
-
-Then('El sistema cargara el carro de compra',async function (this: IWorld){
-    await this.inventario.validarIngresoCarro()
-})
-
-When('El usuario ingresa al menu', async function (this: IWorld){
+When('ha abierto el menú hamburguesa', async function(this: IWorld){
     await this.inventario.abrirMenu();
 })
 
-Then('El sistema mostrara las opciones disponibles', async function (this: IWorld){
-    await this.inventario.validarOpcionesMenu();
+When('hace clic en la opción Logout', async function(this: IWorld){
+    await this.inventario.clickLogout();
 })
 
-When('el usuario hace clic en Logout', async function (this: IWorld){
-    await this.inventario.abrirMenu();
-    await this.inventario.clickLogout()
+Then('el campo de usuario está vacío', async function(this: IWorld){
+    await this.login.usuarioVacio();
 })
 
-Then('El sistema redirige al login',async function (this: IWorld){
-    await this.login.validarPaginaLogin()
+Then('el botón Login es visible', async function(this: IWorld){
+    await this.login.loginVisible();
 })
