@@ -3,7 +3,7 @@
 Característica: Carrito de compras - SauceDemo
   Como usuario autenticado en SauceDemo
   Quiero gestionar los productos en mi carrito de compras
-  Para poder revisar, modificar y proceder al checkout de mi pedido
+  Para poder revisar, modificar el carro de mi pedido
 
   Antecedentes:
     Dado que el usuario navega a "https://www.saucedemo.com"
