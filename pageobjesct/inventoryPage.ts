@@ -28,6 +28,7 @@ export class inventoryPage {
     private readonly menuResetApp: Locator;
     private readonly descripcionTexr: Locator;
     private readonly precioText: Locator;
+    private readonly agregarSauceLabsOnesie: Locator;
 
 
     constructor(page: Page){
@@ -58,6 +59,7 @@ export class inventoryPage {
         this.menuResetApp = page.locator('#reset_sidebar_link');
         this.descripcionTexr = page.locator('.inventory_item_desc');
         this.precioText = page.locator('.inventory_item_price');
+        this. agregarSauceLabsOnesie = page.locator('#add-to-cart-sauce-labs-onesie')
     }
 
     async agregarSauceLabsBackpack(){
@@ -283,6 +285,11 @@ export class inventoryPage {
     const producto = this.page.locator('.inventory_item').filter({
         has: this.page.locator('.inventory_item_name', { hasText: nombreProducto })
     });
-    await producto.locator('.btn_secondary').click();
-}
+        await producto.locator('.btn_secondary').click();
+    }
+
+
+    async agregarOtroProducto(){
+        await this.agregarSauceLabsOnesie.click();
+    }
 }
