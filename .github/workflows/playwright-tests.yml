@@ -71,4 +71,5 @@ jobs:
           path: |
             test-output.txt
             reports/
+            allure-results/
           if-no-files-found: ignore
