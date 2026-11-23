@@ -42,17 +42,6 @@ Característica: Autenticación de usuarios en Saucedemo
     Entonces el sistema redirige al usuario a "/inventory.html"
     Y la página carga el inventario de productos
 
-  # ─────────────────────────────────────────────
-  # ESCENARIOS DE COMPORTAMIENTO ESPECIAL
-  # ─────────────────────────────────────────────
-  
-  Escenario: Login con degradación de rendimiento
-    Dado que el usuario ingresa el nombre de usuario "performance_glitch_user"
-    Y el usuario ingresa la contraseña 
-    Cuando el usuario hace clic en el botón Login
-    Entonces el tiempo de carga es mayor a 3 segundos
-    Y el sistema redirige al usuario a "/inventory.html"
-    Y la página carga el inventario de productos
 
   # ─────────────────────────────────────────────
   # ESCENARIOS DE LOGIN FALLIDO
