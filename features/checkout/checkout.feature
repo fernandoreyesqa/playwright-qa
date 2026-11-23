@@ -93,7 +93,7 @@ Característica: Checkout - SauceDemo
         Entonces el usuario es redirigido a "https://www.saucedemo.com/checkout-step-two.html"
         Y el usuario hace clic en el titulo del producto del checkout
         Entonces el usuario es redirigido a "https://www.saucedemo.com/inventory-item"
-    @smoke
+    
     Escenario: clic en el boton finish
         Dado que el usuario hace clic en el boton checkout
         Entonces el usuario es redirigido a "https://www.saucedemo.com/checkout-step-one.html"
