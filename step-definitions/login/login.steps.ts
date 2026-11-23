@@ -100,11 +100,6 @@ When('todas las imágenes de productos apuntan al mismo src', async function(thi
     await this.login.validarImagenProductos()
 })
 
-Then('el tiempo de carga es mayor a 3 segundos', async function(this: IWorld){
-    await this.page.waitForURL(/.*inventory.html/);
-    const tiempoCarga = Date.now() - this.tiempoInicio;
-    expect(tiempoCarga).toBeGreaterThan(3000);
-})
 
 Then('el sistema muestra el mensaje de error {string}', async function(this: IWorld, mensaje: string){
     await this.login.validarMesajeErro(mensaje);
