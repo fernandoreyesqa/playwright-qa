@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -33,29 +33,42 @@ jobs:
           CHANGED=$(git diff --name-only HEAD~1 HEAD)
           echo "Changed files: $CHANGED"
 
-          if echo "$CHANGED" | grep -q "features/login"; then
-            echo "tags=@login" >> $GITHUB_OUTPUT
-          elif echo "$CHANGED" | grep -q "features/inventory"; then
-            echo "tags=@invetario" >> $GITHUB_OUTPUT
-          elif echo "$CHANGED" | grep -q "features/carro"; then
-            echo "tags=@carro" >> $GITHUB_OUTPUT
-          elif echo "$CHANGED" | grep -q "features/checkout"; then
-            echo "tags=@checkout" >> $GITHUB_OUTPUT
-          else
+          TAGS=()
+          echo "$CHANGED" | grep -q "features/login"     && TAGS+=("@login")
+          echo "$CHANGED" | grep -q "features/inventory" && TAGS+=("@inventario")
+          echo "$CHANGED" | grep -q "features/carro"     && TAGS+=("@carro")
+          echo "$CHANGED" | grep -q "features/checkout"  && TAGS+=("@checkout")
+
+          if [ ${#TAGS[@]} -eq 0 ]; then
             echo "tags=all" >> $GITHUB_OUTPUT
+          else
+            JOINED=$(printf " or %s" "${TAGS[@]}")
+            echo "tags=${JOINED:4}" >> $GITHUB_OUTPUT
           fi
 
       - name: Run tests
+        shell: bash
         run: |
+          set -o pipefail
           if [ "${{ steps.changes.outputs.tags }}" = "all" ]; then
             echo "Running all tests"
-            npm run test:bdd 2>&1 | tee test-output.txt || true
+            npm run test:bdd 2>&1 | tee test-output.txt
           else
-            echo "Running tests for tag: ${{ steps.changes.outputs.tags }}"
-            npx cucumber-js --tags "${{ steps.changes.outputs.tags }}" 2>&1 | tee test-output.txt || true
+            echo "Running tests for tags: ${{ steps.changes.outputs.tags }}"
+            npx cucumber-js --tags "${{ steps.changes.outputs.tags }}" 2>&1 | tee test-output.txt
           fi
         env:
           ENV: qa
           URL: ${{ secrets.URL }}
           usuario: ${{ secrets.USUARIO }}
           pass: ${{ secrets.PASS }}
+
+      - name: Upload test output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test-output.txt
+            reports/
+          if-no-files-found: ignore
